@@ -1,5 +1,5 @@
-/*
- * Matthew Baisden
+package src;
+Asteroids_partialtthew Baisden
  * Asn 2 - Asteroids
  * CSC 313-A Graphics
  * Dr. Sanders
@@ -260,7 +260,7 @@
 
 private static void bindKey(JPanel myPanel, String input)
 {
-    myPanel.getInputMap(IFW).put(KeyStroke.getKeyStroke("pressed " + input), input + " pressed");\
+    myPanel.getInputMap(IFW).put(KeyStroke.getKeyStroke("pressed " + input), input + " pressed");
     myPanel.getActionMap().put(input + "pressed", new KeyPressed(input));
 
     myPanel.getInputMap(IFW).put(KeyStroke.getKeyStroke("released" + input), input + " released");
