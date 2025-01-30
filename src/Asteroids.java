@@ -328,13 +328,374 @@ public class Asteroids {
         private double velocity;
     }
 
-    /*
-    *
-    *
-    * INSERT PAGES STARTING FROM p. 54
-    *
-    *
-    */
+    public EnemyBulletsMover() {
+        velocity = 1.2;
+    }
+    public void run()
+        while(endgame == false && enemyAlive == true)
+        {
+        try
+        {
+        // controls bullet Speed
+        Thread.sleep( 4 );
+        }
+        catch( InterruptedException e )
+        {
+        // NOP
+        }
+        try
+        {
+        for(int i = 0: 4.< enemyBullets.size(); i++ )
+        {
+
+enemyBullets.elementAt(i) .move( -velocity
+* Math.cos( enemyBullets.elementat(4),
+getAngle() - pi / 2.9 ), velocity Â«
+Math.sin( enemyBullets.elementat (i).
+getAngle() - pi / 2.0) );
+enemyBullets.elementAt (i).screenWrap(
+XOFFSET, XOFFSET + WINWIDTH, YOFFSET,
+YOFFSET + WINHEIGHT );
+
+if( System.currentTimeMillis() -
+enemyBulletsTimes.elementat(i) >
+enemybulletlifetime )
+{
+
+enemyBullets.remove( i );
+enemyBulletsTimes.remove( i );
+}
+
+catch( java.lang.ArrayIndexOutOfBoundsException
+aie )
+{
+
+enemyBullets.clear();
+enemyBulletsTimes.clear();
+}
+}
+}
+Private double velocity;
+}
+private static class CollisionChecker implements Runnable
+{
+public void run()
+{
+Random randomNumbers= new Random( LocalTime.Now().getNano() );
+while( endgame == false )
+{
+try
+{
+
+// compare all asteroids to all player ,
+for (int j = 0; i < asteroids.size(); i++)
+{
+
+if( collisionOccurs( asteroids.
+elementAt (i), playerBullets,
+elementAt (j) ) == true)
+{
+
+// delete asteroid, show explosion
+animation, replace old
+asteroid with two new,
+smaller asteroids at same place,
+random directions.
+
+
+double posX = asteroids.elementAt(
+i).getX();
+double posY = asteroids.elementAt(
+i).getY();
+
+
+// create explosion!
+explosions.addElement( new
+ImageObject( posX, posy, 27,
+24, 0.0));
+explosionsTimes.addElement( System
+.currentTimeMillis ());
+
+
+// create two new asteroids of type 2
+if ( asteroidsTypes.elementAt(i) ==
+1)
+{
+
+asteroids.addElement( new
+ImageObject( posX, posY,
+ast2width, ast2width, (
+double) (randomNumbers.
+nextInt(360)));
+asteroidsTypes.addElement(2)
+;
+
+asteroids.remove(i);
+asteroidsTypes.remove(i);
+playerBullets.remove(j);
+playerBulletsTimes.remove(j);
+
+// create two new asteroids of type 3
+if(asteroidsTypes.elementAt(i) ==
+2)
+{
+
+asteroids.addElement( new
+ImageObject( posX, posY,
+ast3width, ast3width, (
+double) (randomNumbers.
+nextInt(360)) ) );
+asteroidsTypes.addElement( 3 )
+;
+asteroids.remove(i);
+asteroidsTypes.remove(i);
+playerBullets. remove (j);
+playerBulletsTimes.remove(j);
+
+// delete asteroids.
+if(asteroidsTypes.elementAt(i) ==
+3)
+{
+asteroids.remove(i);
+asteroidsTypes.remove(i);
+playerBullets.remove(j);
+playerBulletsTimes.remove(j);
+
+// compare all asteroids to player
+for(int i = 0; i < asteroids.size(); i++ )
+{
+if( collisionOccurs( asteroids.elementAt(i
+), pl ) == true )
+{
+endgame = true;
+System.out.println( "Game Over. You
+Lose!" );
+}
+}
+try
+{
+
+// compare all player bullets to enemy ship
+
+for(int i = 0; i< playerBullets.size();
+i++ )
+{
+if(collisionOccurs( playerBullets,
+elementAt(i), enemy ) == true )
+{
+double posX = enemy.getX();
+double posY = enemy.getY();
+
+// create explosion!
+explosions.addElement( new
+ImageObject( posX, posY, 27,
+24,0.0));
+
+explosionsTimes.addElement(System.currentTimeMillis() );
+playerBullets.remove(i);
+playerBulletsTimes.remove(i);
+enemyAlive = false;
+enemy = null;
+enemyBullets.clear();
+enemyBulletsTimes.clear();
+}
+}
+
+// compare enemy ship to player
+if( collisionOccurs( enemy, pl ) == true )
+{
+endgame = true;
+System.out.printin( "Game Over. You
+Lose!" );
+}
+
+
+// compare all enemy bullets to player
+for(int i = 0; i < enemyBullets.size(); i++)
+{
+if(collisionOccurs(enemyBullets.
+elementAt(i), pl ) == true )
+{
+endgame = true;
+System.out.println( "Game Over.
+You Lose!" );
+}
+}
+}
+catch(java.lang.NullPointerException jlnpe )
+{
+// NOP
+}
+}
+catch(java.lang.ArrayIndexOutofBoundsException jlaioobe)
+{
+//NOP
+}
+}
+}
+}
+
+private static class WinChecker implements Runnable {
+public void run()
+{
+while( endgame == false )
+{
+if(asteroids.Size() == 0 ) {
+endgame = true;
+System.out.println( "Game Over. You Win!" );
+}
+}
+}
+}
+
+private static void generateAsteroids()
+{
+asteroids = new Vector< ImageObject >();
+asteroidsTypes = new Vector< Integer >();
+Random randomNumbers = new Random( LocalTime.now() .getNano());
+for( int i = 0; i < level; i++ )
+{
+
+asteroids.addElement(new ImageObject( XOFFSET + (
+double) (randomNumbers.nextInt (WINWIDTH)), YOFFSET
++ (double) (randomNumbers.nextInt (WINHEIGHT)),
+ast1width, ast1width, (double) (randomNumbers.
+nextInt(360))));
+asteroidsTypes.addElement( 1 );
+}
+}
+
+private static void generateEnemy()
+{
+try
+{
+Random randomNumbers = new Random(LocalTime.now().
+getNano() );
+enemy = new ImageObject( XOFFSET + (double)(
+
+randomNumbers.nextInt (WINWIDTH)), YOFFSET + (
+double) (randomNumbers.nextInt (WINHEIGHT)), 29.0,
+16.0, (double) (randomNumbers.nextInt(360)) );
+}
+catch( java.lang.IllegalArgumentException jliae )
+{
+// NOP
+}
+
+
+// dist is a distance between the two objects at the bottom objInner.
+private static void lockrotateObjAroundObjbottom(ImageObject
+objOuter, ImageObject objInner, double dist)
+{
+objOuter.moveto(objInner.getX() + (dist + objInner,
+getWidth() / 2.0) * Math.cos(-objInner.getAngle() + pi
+/2.0) + objOuter.getWidth() / 2.0, objInner.gety() 4 (
+dist + objInner.getHeight() / 2.0) * Math.sin(-
+objInner.getAngle() + pi/2.0) + objOuter.getHeight() /
+2.0);
+objOuter.setAngle(objInner.getAngle());
+}
+
+
+// dist is a distance between the two objects at the top of the inner object.
+private static void lockrotateObjAroundObjtop(ImageObject
+objOuter, ImageObject objInner, double dist )
+{
+objOuter.moveto(objInner.getX() + objOuter.getWidth() + (
+objInner.getWidth() / 2.0 + (dist + objInner.getWidth
+() / 2.0 ) * Math.cos(objInner.getAngle() + pi/2.0 ))
+/ 2.0, objInner.getY() - objOuter.getHeight() + (dist
++ objInner.getHeight() / 2.0 ) * Math.sin( objInner.
+getAngle() / 2.0 ));
+objOuter.setAngle( objInner.getAngle() );
+}
+private static AffineTransformOp rotateImageObject(
+ImageObject obj )
+{
+
+
+
+AffineTransform at = AffineTransform.getRotateInstance( -
+obj.getInternalAngle(), obj.getWidth()/2.0, obj.getHeight()
+/2.0);
+
+AffineTransformOp atop = new AffineTransformOp( at,
+AffineTrasformOP.TYPE_BILINEAR(;
+return atop;
+}
+
+private static void backgroundDraw()
+{
+Graphics g = appFrame.getGraphics();
+Graphics2D g2D = (Graphics2D) g;
+g2D.drawImage(background, XOFFSET, YOFFSET, null );
+}
+
+
+private static void enemyBulletsDraw()
+{
+Graphics g = appFrame.getGraphics();
+Graphics2D g2D = (Graphics2D) g;
+for( int i = 0; i < enemyBullets.size(); i++ )
+{
+
+
+g2D.drawImage(enemyBullet, (int)(enemyBullets.
+elementAt(i).getX() + 0.5), (int) (enemyBullets.
+elementAt(i).getY() + 0.5), null);
+}
+
+
+
+private static void enemyDraw()
+{
+if( enemyAlive == true )
+{
+try
+{
+
+Graphics g = appFrame.getGraphics();
+Graphics2D g2D = (Graphics2D) g;
+g2D.drawImage(enemyShip, (int) (enemy.getX() +
+0.5), (int) (enemy.getY() + 0.5), null );
+}
+catch( java.lang.NullPointerException jlnpe )
+{
+// NOP
+}
+}
+}
+private static void playerBulletsDraw()
+{
+Graphics g = appFrame.getGraphics();
+Graphics2D g2D = (Graphics2D) g;
+try
+
+{
+for( int i = O; i< playerBullets.size(); i++ )
+{
+g2D.drawImage( rotateImageObject( PlayerBullets.elementAt (i)).filter( playerBullet, null ), 
+(int) (playerBullets.elementAt (1) .getx() + 0.5),
+(int) (playerBullets.elementAt (1) .gety() ;
+0.5), null );
+}
+}
+catch ( sava.lang.ArrayIndexOutOfBoundsException aioobe )
+{
+playerBullets.clear();
+playerBulletsTimes.clear();
+}
+}
+
+
+private static void playerDraw()
+{
+Graphics g = appFrame.getGraphics();
+Graphics2D g2D = (Graphics2D) g;
+g2D.drawImage(rotateImageObject(pl).filter(player, null
+), (int)(pl.getX() + 0.5),(int) (pl.getY() + 0.5),
+null );
+}
 
     private static void flameDraw() {
         if (upPressed == true) 
@@ -1048,4 +1409,5 @@ public class Asteroids {
 
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
 
+    }
 }
